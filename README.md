@@ -14,7 +14,6 @@ This project is used in conjunction with [gnupg-buildkit](https://github.com/hsa
 
 <code>
 dotnet restore
-
 dotnet build
 </code>
 
