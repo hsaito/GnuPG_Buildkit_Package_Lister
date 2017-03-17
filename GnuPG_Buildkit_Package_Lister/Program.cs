@@ -10,6 +10,9 @@ namespace GnuPG_Buildkit_Package_Lister
 {
     class Program
     {
+        /// <summary>
+        /// Main Function
+        /// </summary>
         static void Main(string[] args)
         {
             try
@@ -23,25 +26,36 @@ namespace GnuPG_Buildkit_Package_Lister
             }
         }
 
+        /// <summary>
+        /// Actual Process
+        /// </summary>
         static async Task Process()
         {
             try
             {
                 string url = "";
+
+                // Load components list ("product" names)
                 var components = GetComponents();
+
+                // Open URL
                 using (var sr = new StreamReader(new FileStream("config.xml", FileMode.Open)))
                 {
                     XElement element = XElement.Load(sr);
                     url = element.Element("url").Value;
                 }
 
+                // Get the contents
                 string content = await GetWeb(url);
 
+                // Enumerate versions into the list
                 List<string> versions = new List<string>();
 
+                // Extract versions from the HTML dump
                 foreach (var item in components)
                     versions.Add(ExtractVersion(content, item));
 
+                // Merge into packages file
                 CreateResult(components, versions);
             }
             catch (Exception ex)
@@ -51,27 +65,43 @@ namespace GnuPG_Buildkit_Package_Lister
             }
         }
 
+        /// <summary>
+        /// Retrieve content from the web.
+        /// </summary>
+        /// <param name="location">URL of the website</param>
+        /// <returns>String of the website</returns>
         static async Task<string> GetWeb(string location)
         {
+            // Make a request
             var request = WebRequest.Create(location);
+            // Get the response
             var response = await request.GetResponseAsync();
+            // Get the stream
             var stream = response.GetResponseStream();
+            // Read the stream
             StreamReader reader = new StreamReader(stream);
             string data = await reader.ReadToEndAsync();
             return data;
         }
 
+        /// <summary>
+        /// Merge and create a package list
+        /// </summary>
+        /// <param name="components">List of the components</param>
+        /// <param name="versions">List of the versions</param>
         static void CreateResult(List<string> components, List<string> versions)
         {
+            // Get the template string
             var template = GetTemplate();
 
+            // Merge the components and versions into the string
             for (int i = 0; i < components.Count; i++)
             {
                 Regex replacement = new Regex(string.Format("<{0}>", components[i]));
                 template = replacement.Replace(template, versions[i]);
             }
 
-
+            // Write it out.
             using (var sw = new StreamWriter(new FileStream(GetOutputName(), FileMode.Create)))
             {
                 sw.Write(template);
@@ -79,13 +109,24 @@ namespace GnuPG_Buildkit_Package_Lister
             }
         }
 
+        /// <summary>
+        /// Get the version by the name of the component
+        /// </summary>
+        /// <param name="data">String of the data dump</param>
+        /// <param name="component">Name of the component to retrieve</param>
+        /// <returns>Version as the string</returns>
         static string ExtractVersion(string data, string component)
         {
+            // Kind of a hack, just match it up in the filename in the HTML
             Regex pattern = new Regex(component + @"-(?<version>.*?)" + ".tar.bz2");
             Match match = pattern.Match(data);
             return match.Groups["version"].Value;
         }
 
+        /// <summary>
+        /// Get the list of components
+        /// </summary>
+        /// <returns>List of the components</returns>
         static List<string> GetComponents()
         {
             List<string> components = new List<string>();
@@ -93,7 +134,8 @@ namespace GnuPG_Buildkit_Package_Lister
             {
                 XElement element = XElement.Load(sr);
                 var component_group = element.Element("components");
-
+                
+                // Add the component to the list
                 foreach (var item in component_group.Elements())
                     components.Add(item.Value);
             }
@@ -101,6 +143,10 @@ namespace GnuPG_Buildkit_Package_Lister
             return components;
         }
 
+        /// <summary>
+        /// Get the components
+        /// </summary>
+        /// <returns>Template as the string</returns>
         static string GetTemplate()
         {
             using (var sr = new StreamReader(new FileStream(GetTemplateName(), FileMode.Open)))
@@ -109,6 +155,10 @@ namespace GnuPG_Buildkit_Package_Lister
             }
         }
 
+        /// <summary>
+        /// Get the name of the template
+        /// </summary>
+        /// <returns>Name of the template as the string</returns>
         static string GetTemplateName()
         {
             using (var sr = new StreamReader(new FileStream("config.xml", FileMode.Open)))
@@ -118,6 +168,10 @@ namespace GnuPG_Buildkit_Package_Lister
             }
         }
 
+        /// <summary>
+        /// Get the name of the output
+        /// </summary>
+        /// <returns>Name of the output as the string</returns>
         static string GetOutputName()
         {
             using (var sr = new StreamReader(new FileStream("config.xml", FileMode.Open)))
