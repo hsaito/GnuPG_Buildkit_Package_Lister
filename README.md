@@ -4,6 +4,8 @@
 
 This project is used in conjunction with [gnupg-buildkit](https://github.com/hsaito/gnupg-buildkit). Using this program, it will parse HTML from [GnuPG](https://gnupg.org/) and then create package list to be used with the gnupg-buildkit.
 
+This should work under Windows, Mac, and Linux.
+
 ## Building
 
 ### Dependencies
@@ -12,13 +14,8 @@ This project is used in conjunction with [gnupg-buildkit](https://github.com/hsa
 
 ### Build Instructions
 
-<code>
-dotnet restore
-dotnet build
-</code>
+In the project directory,`dotnet restore` then `dotnet build`
 
 ### Running
 
-<code>
-dotnet run
-</code>
+`dotnet run`
