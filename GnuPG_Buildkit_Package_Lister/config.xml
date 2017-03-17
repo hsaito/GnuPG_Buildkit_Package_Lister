@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+    <url>https://gnupg.org/download/index.html</url>
+    <components>
+        <item>libgpg-error</item>
+        <item>libksba</item>
+        <item>libgcrypt</item>
+        <item>libassuan</item>
+        <item>npth</item>
+        <item>gnupg</item>
+        <item>pinentry</item>
+    </components>
+    <template>packages.list.tpl</template>
+    <output>packages.list</output>
+</config>
