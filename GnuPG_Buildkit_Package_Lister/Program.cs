@@ -39,12 +39,7 @@ namespace GnuPG_Buildkit_Package_Lister
                 var components = GetComponents();
 
                 // Open URL
-                using (var sr = new StreamReader(new FileStream("config.xml", FileMode.Open)))
-                {
-                    XElement element = XElement.Load(sr);
-                    url = element.Element("url").Value;
-                }
-
+                url = GetElementByName("url");
                 // Get the contents
                 string content = await GetWeb(url);
 
@@ -161,11 +156,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// <returns>Name of the template as the string</returns>
         static string GetTemplateName()
         {
-            using (var sr = new StreamReader(new FileStream("config.xml", FileMode.Open)))
-            {
-                XElement element = XElement.Load(sr);
-                return element.Element("template").Value;
-            }
+            return GetElementByName("template");
         }
 
         /// <summary>
@@ -174,10 +165,20 @@ namespace GnuPG_Buildkit_Package_Lister
         /// <returns>Name of the output as the string</returns>
         static string GetOutputName()
         {
+            return GetElementByName("output");
+        }
+
+        /// <summary>
+        /// Get XML element from config by name.
+        /// </summary>
+        /// <param name="name">Name of the element</param>
+        /// <returns>Element value as string.</returns>
+        static string GetElementByName(string name)
+        {
             using (var sr = new StreamReader(new FileStream("config.xml", FileMode.Open)))
             {
                 XElement element = XElement.Load(sr);
-                return element.Element("output").Value;
+                return element.Element(name).Value;
             }
         }
     }
