@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace GnuPG_Buildkit_Package_Lister
 {
@@ -97,9 +98,9 @@ namespace GnuPG_Buildkit_Package_Lister
             }
 
             // Write it out.
-            using (var sw = new StreamWriter(new FileStream(GetOutputName(), FileMode.Create)))
+            using (var sw = new StreamWriter(new FileStream(GetOutputName(),FileMode.Create),Encoding.UTF8))
             {
-                sw.Write(template);
+                sw.Write(template+"\r\n");
                 sw.Flush();
             }
         }
