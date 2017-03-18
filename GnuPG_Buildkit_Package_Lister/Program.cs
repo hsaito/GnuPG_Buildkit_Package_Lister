@@ -130,7 +130,7 @@ namespace GnuPG_Buildkit_Package_Lister
         static List<string> GetComponents()
         {
             List<string> components = new List<string>();
-            using (var sr = File.OpenText("config.xml"))
+            using (var sr = new StreamReader(new FileStream("config.xml", FileMode.Open)))
             {
                 XElement element = XElement.Load(sr);
                 var component_group = element.Element("components");
