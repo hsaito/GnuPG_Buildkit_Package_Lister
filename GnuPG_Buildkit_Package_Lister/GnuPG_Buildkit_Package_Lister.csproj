@@ -1,8 +1,26 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp1.1</TargetFramework>
+    <Authors>Hideki Saito</Authors>
+    <Company>Hideki Saito</Company>
+    <Product>Hideki Saito</Product>
+    <PackageId>GnuPG_Buildkit_Package_Lister</PackageId>
+    <Description>A simple program to grab GnuPG file list ot be used for gnupg-buildkit</Description>
+    <Copyright>Copyright (c) 2017 Hideki Saito</Copyright>
+    <PackageLicenseUrl>https://github.com/hsaito/GnuPG_Buildkit_Package_Lister/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/hsaito/GnuPG_Buildkit_Package_Lister</PackageProjectUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>none</DebugType>
+    <DebugSymbols>False</DebugSymbols>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
 </Project>
