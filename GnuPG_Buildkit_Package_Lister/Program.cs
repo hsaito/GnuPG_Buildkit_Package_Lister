@@ -19,6 +19,10 @@ namespace GnuPG_Buildkit_Package_Lister
         #region Messages
         // This is suboptimal way of handling message strings.
         // But the problem is that .NET Core currently do not have built-in support for Resource Compiler...
+
+        /// <summary>
+        /// Messages string for the program.
+        /// </summary>
         private struct messages
         {
             public static string debug_mode = "Compiled for debug.";
@@ -48,7 +52,7 @@ namespace GnuPG_Buildkit_Package_Lister
                 {
                     log4netConfig.Load(reader);
                 }
-
+                
                 ILoggerRepository rep = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
 
                 XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
