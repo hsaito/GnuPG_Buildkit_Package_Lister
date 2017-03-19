@@ -92,6 +92,7 @@ namespace GnuPG_Buildkit_Package_Lister
                 // Enumerate versions into the list
                 List<string> versions = new List<string>();
 
+                log.Info(messages.extract_version);
                 // Extract versions from the HTML dump
                 foreach (var item in components)
                     versions.Add(ExtractVersion(content, item));
