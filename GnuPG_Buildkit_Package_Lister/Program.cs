@@ -62,6 +62,7 @@ namespace GnuPG_Buildkit_Package_Lister
             {
                 Console.WriteLine(messages.logging_error);
                 Console.WriteLine(ex.Message);
+                return;
             }
 
             try
