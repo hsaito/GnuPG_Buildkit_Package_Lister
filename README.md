@@ -17,5 +17,8 @@ This should work under Windows, Mac, and Linux.
 In the project directory,`dotnet restore` then `dotnet build`
 
 ### Running
-
+#### Source Code Distribution
 `dotnet run`
+
+#### Binary
+`dotnet GnuPG_Buildkit_Package_Lister.dll`
