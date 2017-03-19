@@ -30,19 +30,4 @@
     <PackageReference Include="log4net" Version="2.0.8" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="messages.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>messages.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="messages.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>messages.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-
 </Project>

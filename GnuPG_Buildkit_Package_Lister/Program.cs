@@ -16,6 +16,22 @@ namespace GnuPG_Buildkit_Package_Lister
 {
     class Program
     {
+        #region Messages
+        // This is suboptimal way of handling message strings.
+        // But the problem is that .NET Core currently do not have built-in support for Resource Compiler...
+        private struct messages
+        {
+            public static string debug_mode = "Compiled for debug.";
+            public static string extract_version = "Extracting version informations...";
+            public static string generate_list = "Generating the package list...";
+            public static string get_remote = "Getting the contents from the remote...";
+            public static string program_completed = "Program completed.";
+            public static string program_starting = "Starting program...";
+            public static string url_fetch = "URL to fetch: ";
+        }
+        #endregion Messages
+
+
         private static readonly ILog log = LogManager.GetLogger(typeof(Program));
 
         /// <summary>
