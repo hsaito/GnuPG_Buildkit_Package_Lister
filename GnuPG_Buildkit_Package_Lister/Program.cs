@@ -52,7 +52,7 @@ namespace GnuPG_Buildkit_Package_Lister
                 {
                     log4netConfig.Load(reader);
                 }
-                
+
                 ILoggerRepository rep = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
 
                 XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
@@ -84,7 +84,7 @@ namespace GnuPG_Buildkit_Package_Lister
                 // Load components list ("product" names)
                 var components = GetComponents();
 
-                
+
                 // Open URL
                 url = GetElementByName("url");
                 log.Info(messages.url_fetch + url);
@@ -149,9 +149,9 @@ namespace GnuPG_Buildkit_Package_Lister
             }
 
             // Write it out.
-            using (var sw = new StreamWriter(new FileStream(GetOutputName(),FileMode.Create),Encoding.UTF8))
+            using (var sw = new StreamWriter(new FileStream(GetOutputName(), FileMode.Create), Encoding.UTF8))
             {
-                sw.Write(template+"\r\n");
+                sw.Write(template + "\r\n");
                 sw.Flush();
             }
         }
@@ -181,7 +181,7 @@ namespace GnuPG_Buildkit_Package_Lister
             {
                 XElement element = XElement.Load(sr);
                 var component_group = element.Element("components");
-                
+
                 // Add the component to the list
                 foreach (var item in component_group.Elements())
                     components.Add(item.Value);
