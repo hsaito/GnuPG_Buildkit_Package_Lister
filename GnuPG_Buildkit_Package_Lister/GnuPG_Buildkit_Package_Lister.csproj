@@ -11,9 +11,9 @@
     <Copyright>Copyright (c) 2017 Hideki Saito</Copyright>
     <PackageLicenseUrl>https://github.com/hsaito/GnuPG_Buildkit_Package_Lister/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/hsaito/GnuPG_Buildkit_Package_Lister</PackageProjectUrl>
-    <Version>1.0.1.0</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.2.0</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
@@ -25,5 +25,24 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="messages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>messages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
 
 </Project>

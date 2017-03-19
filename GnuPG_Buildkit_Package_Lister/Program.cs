@@ -6,11 +6,18 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Text;
+using log4net;
+using System.Xml;
+using log4net.Repository;
+using System.Reflection;
+using log4net.Config;
 
 namespace GnuPG_Buildkit_Package_Lister
 {
     class Program
     {
+        private static readonly ILog log = LogManager.GetLogger(typeof(Program));
+
         /// <summary>
         /// Main Function
         /// </summary>
@@ -18,12 +25,27 @@ namespace GnuPG_Buildkit_Package_Lister
         {
             try
             {
+                // Configuration for logging
+                XmlDocument log4netConfig = new XmlDocument();
+
+                using (StreamReader reader = new StreamReader(new FileStream("log4net.config", FileMode.Open, FileAccess.Read)))
+                {
+                    log4netConfig.Load(reader);
+                }
+
+                ILoggerRepository rep = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
+
+                XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
+
+                // Start the program
+                log.Info(messages.program_starting);
                 Process().Wait();
+                log.Info(messages.program_completed);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                log.Fatal(ex.Message);
+                log.Debug(ex.StackTrace);
             }
         }
 
@@ -39,9 +61,13 @@ namespace GnuPG_Buildkit_Package_Lister
                 // Load components list ("product" names)
                 var components = GetComponents();
 
+                
                 // Open URL
                 url = GetElementByName("url");
+                log.Info(messages.url_fetch + url);
+
                 // Get the contents
+                log.Info(messages.get_remote);
                 string content = await GetWeb(url);
 
                 // Enumerate versions into the list
@@ -52,12 +78,13 @@ namespace GnuPG_Buildkit_Package_Lister
                     versions.Add(ExtractVersion(content, item));
 
                 // Merge into packages file
+                log.Info(messages.generate_list);
                 CreateResult(components, versions);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
+                log.Error(ex.Message);
+                log.Debug(ex.StackTrace);
             }
         }
 
