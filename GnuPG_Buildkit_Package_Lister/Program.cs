@@ -25,6 +25,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// </summary>
         private struct messages
         {
+            public static string logging_error = "Problem with the logging facility.\nPerhaps missing a config?";
             public static string debug_mode = "Compiled for debug.";
             public static string extract_version = "Extracting version informations...";
             public static string generate_list = "Generating the package list...";
@@ -43,6 +44,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// </summary>
         static void Main(string[] args)
         {
+
             try
             {
                 // Configuration for logging
@@ -54,9 +56,16 @@ namespace GnuPG_Buildkit_Package_Lister
                 }
 
                 ILoggerRepository rep = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
-
                 XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(messages.logging_error);
+                Console.WriteLine(ex.Message);
+            }
 
+            try
+            {
                 // Start the program
                 log.Info(messages.program_starting);
 #if DEBUG
