@@ -39,6 +39,9 @@ namespace GnuPG_Buildkit_Package_Lister
 
                 // Start the program
                 log.Info(messages.program_starting);
+#if DEBUG
+                log.Info(messages.debug_mode);
+#endif
                 Process().Wait();
                 log.Info(messages.program_completed);
             }

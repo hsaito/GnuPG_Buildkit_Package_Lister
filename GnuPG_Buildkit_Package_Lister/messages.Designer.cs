@@ -62,6 +62,15 @@ namespace GnuPG_Buildkit_Package_Lister {
         }
         
         /// <summary>
+        ///   Compiled for debug. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string debug_mode {
+            get {
+                return ResourceManager.GetString("debug_mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Extracting version informations... に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string extract_version {
