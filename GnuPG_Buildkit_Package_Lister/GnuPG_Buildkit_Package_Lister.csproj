@@ -34,6 +34,9 @@
     <None Update="config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="packages.list.tpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
