@@ -30,4 +30,13 @@
     <PackageReference Include="log4net" Version="2.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="packages.list.tpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
