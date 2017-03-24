@@ -14,24 +14,8 @@ using log4net.Config;
 
 namespace GnuPG_Buildkit_Package_Lister
 {
-    class Program
+    partial class Program
     {
-        #region Messages
-        // This is suboptimal way of handling message strings.
-        // But the problem is that .NET Core currently do not have built-in support for Resource Compiler...
-        private struct messages
-        {
-            public static string debug_mode = "Compiled for debug.";
-            public static string extract_version = "Extracting version informations...";
-            public static string generate_list = "Generating the package list...";
-            public static string get_remote = "Getting the contents from the remote...";
-            public static string program_completed = "Program completed.";
-            public static string program_starting = "Starting program...";
-            public static string url_fetch = "URL to fetch: ";
-        }
-        #endregion Messages
-
-
         private static readonly ILog log = LogManager.GetLogger(typeof(Program));
 
         /// <summary>
@@ -39,6 +23,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// </summary>
         static void Main(string[] args)
         {
+
             try
             {
                 // Configuration for logging
@@ -50,9 +35,17 @@ namespace GnuPG_Buildkit_Package_Lister
                 }
 
                 ILoggerRepository rep = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
-
                 XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(messages.logging_error);
+                Console.WriteLine(ex.Message);
+                return;
+            }
 
+            try
+            {
                 // Start the program
                 log.Info(messages.program_starting);
 #if DEBUG
@@ -80,7 +73,7 @@ namespace GnuPG_Buildkit_Package_Lister
                 // Load components list ("product" names)
                 var components = GetComponents();
 
-                
+
                 // Open URL
                 url = GetElementByName("url");
                 log.Info(messages.url_fetch + url);
@@ -92,6 +85,7 @@ namespace GnuPG_Buildkit_Package_Lister
                 // Enumerate versions into the list
                 List<string> versions = new List<string>();
 
+                log.Info(messages.extract_version);
                 // Extract versions from the HTML dump
                 foreach (var item in components)
                     versions.Add(ExtractVersion(content, item));
@@ -144,9 +138,9 @@ namespace GnuPG_Buildkit_Package_Lister
             }
 
             // Write it out.
-            using (var sw = new StreamWriter(new FileStream(GetOutputName(),FileMode.Create),Encoding.UTF8))
+            using (var sw = new StreamWriter(new FileStream(GetOutputName(), FileMode.Create), Encoding.UTF8))
             {
-                sw.Write(template+"\r\n");
+                sw.Write(template + "\r\n");
                 sw.Flush();
             }
         }
@@ -176,7 +170,7 @@ namespace GnuPG_Buildkit_Package_Lister
             {
                 XElement element = XElement.Load(sr);
                 var component_group = element.Element("components");
-                
+
                 // Add the component to the list
                 foreach (var item in component_group.Elements())
                     components.Add(item.Value);
