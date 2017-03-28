@@ -88,7 +88,11 @@ namespace GnuPG_Buildkit_Package_Lister
                 log.Info(messages.extract_version);
                 // Extract versions from the HTML dump
                 foreach (var item in components)
-                    versions.Add(ExtractVersion(content, item));
+                {
+                    (var ver, var name) = ExtractVersion(content, item);
+                    log.Info("Adding: " + name);
+                    versions.Add(ver);
+                }
 
                 // Merge into packages file
                 log.Info(messages.generate_list);
@@ -151,12 +155,12 @@ namespace GnuPG_Buildkit_Package_Lister
         /// <param name="data">String of the data dump</param>
         /// <param name="component">Name of the component to retrieve</param>
         /// <returns>Version as the string</returns>
-        static string ExtractVersion(string data, string component)
+        static (string, string) ExtractVersion(string data, string component)
         {
             // Kind of a hack, just match it up in the filename in the HTML
             Regex pattern = new Regex(component + @"-(?<version>.*?)" + ".tar.bz2");
             Match match = pattern.Match(data);
-            return match.Groups["version"].Value;
+            return (match.Groups["version"].Value, match.ToString());
         }
 
         /// <summary>
