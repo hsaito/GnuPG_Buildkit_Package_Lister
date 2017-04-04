@@ -144,7 +144,7 @@ namespace GnuPG_Buildkit_Package_Lister
             // Write it out.
             using (var sw = new StreamWriter(new FileStream(GetOutputName(), FileMode.Create), new UTF8Encoding(false)))
             {
-                sw.Write(template + "\r\n");
+                sw.Write(template);
                 sw.Flush();
             }
         }
