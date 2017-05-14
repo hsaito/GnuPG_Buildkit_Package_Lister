@@ -14,7 +14,7 @@ using log4net.Config;
 
 namespace GnuPG_Buildkit_Package_Lister
 {
-    partial class Program
+    internal partial class Program
     {
         private static readonly ILog log = LogManager.GetLogger(typeof(Program));
 
@@ -64,11 +64,11 @@ namespace GnuPG_Buildkit_Package_Lister
         /// <summary>
         /// Actual Process
         /// </summary>
-        static async Task Process()
+        private static async Task Process()
         {
             try
             {
-                string url = "";
+                var url = "";
 
                 // Load components list ("product" names)
                 var components = GetComponents();
@@ -80,7 +80,7 @@ namespace GnuPG_Buildkit_Package_Lister
 
                 // Get the contents
                 log.Info(messages.get_remote);
-                string content = await GetWeb(url);
+                var content = await GetWeb(url);
 
                 // Enumerate versions into the list
                 List<string> versions = new List<string>();
@@ -110,7 +110,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// </summary>
         /// <param name="location">URL of the website</param>
         /// <returns>String of the website</returns>
-        static async Task<string> GetWeb(string location)
+        private static async Task<string> GetWeb(string location)
         {
             // Make a request
             var request = WebRequest.Create(location);
@@ -129,7 +129,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// </summary>
         /// <param name="components">List of the components</param>
         /// <param name="versions">List of the versions</param>
-        static void CreateResult(List<string> components, List<string> versions)
+        private static void CreateResult(List<string> components, List<string> versions)
         {
             // Get the template string
             var template = GetTemplate();
@@ -155,7 +155,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// <param name="data">String of the data dump</param>
         /// <param name="component">Name of the component to retrieve</param>
         /// <returns>Version as the string</returns>
-        static (string, string) ExtractVersion(string data, string component)
+        private static (string, string) ExtractVersion(string data, string component)
         {
             // Kind of a hack, just match it up in the filename in the HTML
             Regex pattern = new Regex(component + @"-(?<version>.*?)" + ".tar.bz2");
@@ -167,7 +167,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// Get the list of components
         /// </summary>
         /// <returns>List of the components</returns>
-        static List<string> GetComponents()
+        private static List<string> GetComponents()
         {
             List<string> components = new List<string>();
             using (var sr = new StreamReader(new FileStream("config.xml", FileMode.Open)))
@@ -187,7 +187,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// Get the components
         /// </summary>
         /// <returns>Template as the string</returns>
-        static string GetTemplate()
+        private static string GetTemplate()
         {
             using (var sr = new StreamReader(new FileStream(GetTemplateName(), FileMode.Open)))
             {
@@ -199,7 +199,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// Get the name of the template
         /// </summary>
         /// <returns>Name of the template as the string</returns>
-        static string GetTemplateName()
+        private static string GetTemplateName()
         {
             return GetElementByName("template");
         }
@@ -208,7 +208,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// Get the name of the output
         /// </summary>
         /// <returns>Name of the output as the string</returns>
-        static string GetOutputName()
+        private static string GetOutputName()
         {
             return GetElementByName("output");
         }
@@ -218,7 +218,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// </summary>
         /// <param name="name">Name of the element</param>
         /// <returns>Element value as string.</returns>
-        static string GetElementByName(string name)
+        private static string GetElementByName(string name)
         {
             using (var sr = new StreamReader(new FileStream("config.xml", FileMode.Open)))
             {
