@@ -1,6 +1,6 @@
 namespace GnuPG_Buildkit_Package_Lister
 {
-    partial class Program
+    public class Resources
     {
         // This is suboptimal way of handling message strings.
         // But the problem is that .NET Core currently do not have built-in support for Resource Compiler...
@@ -8,7 +8,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// <summary>
         /// Messages string for the program.
         /// </summary>
-        private struct messages
+        internal struct messages
         {
             public static readonly string logging_error = "Problem with the logging facility.\nPerhaps missing a config?";
             public static readonly string debug_mode = "Compiled for debug.";
