@@ -21,7 +21,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// <summary>
         /// Main Function
         /// </summary>
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
 
             try
@@ -41,7 +41,7 @@ namespace GnuPG_Buildkit_Package_Lister
             {
                 Console.WriteLine(Resources.messages.logging_error);
                 Console.WriteLine(ex.Message);
-                return;
+                return -1;
             }
 
             try
@@ -51,13 +51,17 @@ namespace GnuPG_Buildkit_Package_Lister
 #if DEBUG
                 log.Info(Resources.messages.debug_mode);
 #endif
+                GnuPG_Processor processor = new GnuPG_Processor();
+                var retval = processor.Process().Result;
                 //Process().Wait();
                 log.Info(Resources.messages.program_completed);
+                return retval;
             }
             catch (Exception ex)
             {
                 log.Fatal(ex.Message);
                 log.Debug(ex.StackTrace);
+                return -1;
             }
         }
     }

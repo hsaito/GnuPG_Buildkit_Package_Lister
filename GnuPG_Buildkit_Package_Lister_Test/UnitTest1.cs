@@ -9,8 +9,7 @@ namespace GnuPG_Buildkit_Package_Lister_Test
         [TestMethod]
         public void FetchWeb()
         {
-            var processor = new GnuPG_Processor();
-            processor.GetWeb("http://example.com").Wait();
+            GnuPG_Buildkit_Package_Lister_Utils.GetWeb("http://example.com").Wait();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace GnuPG_Buildkit_Package_Lister
         /// <summary>
         /// Actual Process
         /// </summary>
-        public async Task Process()
+        public async Task<int> Process()
         {
             try
             {
@@ -33,7 +33,7 @@ namespace GnuPG_Buildkit_Package_Lister
 
                 // Get the contents
                 log.Info(Resources.messages.get_remote);
-                var content = await GetWeb(url);
+                var content = await GnuPG_Buildkit_Package_Lister_Utils.GetWeb(url);
 
                 // Enumerate versions into the list
                 List<string> versions = new List<string>();
@@ -50,32 +50,17 @@ namespace GnuPG_Buildkit_Package_Lister
                 // Merge into packages file
                 log.Info(Resources.messages.generate_list);
                 CreateResult(components, versions);
+                return 0;
             }
             catch (Exception ex)
             {
                 log.Error(ex.Message);
                 log.Debug(ex.StackTrace);
+                return -1;
             }
         }
 
-        /// <summary>
-        /// Retrieve content from the web.
-        /// </summary>
-        /// <param name="location">URL of the website</param>
-        /// <returns>String of the website</returns>
-        public async Task<string> GetWeb(string location)
-        {
-            // Make a request
-            var request = WebRequest.Create(location);
-            // Get the response
-            var response = await request.GetResponseAsync();
-            // Get the stream
-            var stream = response.GetResponseStream();
-            // Read the stream
-            StreamReader reader = new StreamReader(stream);
-            string data = await reader.ReadToEndAsync();
-            return data;
-        }
+
 
         /// <summary>
         /// Merge and create a package list
