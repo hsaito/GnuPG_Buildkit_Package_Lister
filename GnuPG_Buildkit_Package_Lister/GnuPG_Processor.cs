@@ -13,9 +13,9 @@ namespace GnuPG_Buildkit_Package_Lister
     public static class GnuPrivacyGuardProcessor
     {
         private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
-       
+
         /// <summary>
-        /// Actual Process
+        ///     Actual Process
         /// </summary>
         public static async Task<int> Process()
         {
@@ -59,9 +59,8 @@ namespace GnuPG_Buildkit_Package_Lister
         }
 
 
-
         /// <summary>
-        /// Merge and create a package list
+        ///     Merge and create a package list
         /// </summary>
         /// <param name="components">List of the components</param>
         /// <param name="versions">List of the versions</param>
@@ -86,7 +85,7 @@ namespace GnuPG_Buildkit_Package_Lister
         }
 
         /// <summary>
-        /// Get the version by the name of the component
+        ///     Get the version by the name of the component
         /// </summary>
         /// <param name="data">String of the data dump</param>
         /// <param name="component">Name of the component to retrieve</param>
@@ -100,7 +99,7 @@ namespace GnuPG_Buildkit_Package_Lister
         }
 
         /// <summary>
-        /// Get the list of components
+        ///     Get the list of components
         /// </summary>
         /// <returns>List of the components</returns>
         private static List<string> GetComponents()
@@ -120,7 +119,7 @@ namespace GnuPG_Buildkit_Package_Lister
         }
 
         /// <summary>
-        /// Get the components
+        ///     Get the components
         /// </summary>
         /// <returns>Template as the string</returns>
         private static string GetTemplate()
@@ -132,7 +131,7 @@ namespace GnuPG_Buildkit_Package_Lister
         }
 
         /// <summary>
-        /// Get the name of the template
+        ///     Get the name of the template
         /// </summary>
         /// <returns>Name of the template as the string</returns>
         private static string GetTemplateName()
@@ -141,7 +140,7 @@ namespace GnuPG_Buildkit_Package_Lister
         }
 
         /// <summary>
-        /// Get the name of the output
+        ///     Get the name of the output
         /// </summary>
         /// <returns>Name of the output as the string</returns>
         private static string GetOutputName()
@@ -150,7 +149,7 @@ namespace GnuPG_Buildkit_Package_Lister
         }
 
         /// <summary>
-        /// Get XML element from config by name.
+        ///     Get XML element from config by name.
         /// </summary>
         /// <param name="name">Name of the element</param>
         /// <returns>Element value as string.</returns>

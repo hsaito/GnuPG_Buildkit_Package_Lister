@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
-using log4net;
-using System.Xml;
 using System.Reflection;
+using System.Xml;
+using log4net;
 using log4net.Config;
+using log4net.Repository.Hierarchy;
 
 namespace GnuPG_Buildkit_Package_Lister
 {
@@ -12,11 +13,10 @@ namespace GnuPG_Buildkit_Package_Lister
         private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
 
         /// <summary>
-        /// Main Function
+        ///     Main Function
         /// </summary>
         private static int Main()
         {
-
             try
             {
                 // Configuration for logging
@@ -27,7 +27,8 @@ namespace GnuPG_Buildkit_Package_Lister
                     log4NetConfig.Load(reader);
                 }
 
-                var rep = LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
+                var rep = LogManager.CreateRepository(Assembly.GetEntryAssembly(),
+                    typeof(Hierarchy));
                 XmlConfigurator.Configure(rep, log4NetConfig["log4net"]);
             }
             catch (Exception ex)

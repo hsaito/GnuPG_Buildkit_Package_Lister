@@ -6,7 +6,7 @@ namespace GnuPG_Buildkit_Package_Lister
         // But the problem is that .NET Core currently do not have built-in support for Resource Compiler...
 
         /// <summary>
-        /// Messages string for the program.
+        ///     Messages string for the program.
         /// </summary>
         internal struct Messages
         {

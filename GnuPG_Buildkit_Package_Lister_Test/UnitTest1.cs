@@ -1,5 +1,5 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using GnuPG_Buildkit_Package_Lister;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GnuPG_Buildkit_Package_Lister_Test
 {

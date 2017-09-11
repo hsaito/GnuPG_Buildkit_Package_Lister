@@ -7,7 +7,7 @@ namespace GnuPG_Buildkit_Package_Lister
     public static class GnuPgBuildkitPackageListerUtils
     {
         /// <summary>
-        /// Retrieve content from the web.
+        ///     Retrieve content from the web.
         /// </summary>
         /// <param name="location">URL of the website</param>
         /// <returns>String of the website</returns>
@@ -15,7 +15,7 @@ namespace GnuPG_Buildkit_Package_Lister
         {
             // Make a request
             var request = WebRequest.Create(location);
-            
+
             // Get the response
             var response = await request.GetResponseAsync();
             // Get the stream
