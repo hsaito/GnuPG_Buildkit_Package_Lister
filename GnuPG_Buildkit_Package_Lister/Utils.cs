@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace GnuPG_Buildkit_Package_Lister
 {
-    public static class GnuPG_Buildkit_Package_Lister_Utils
+    public static class GnuPgBuildkitPackageListerUtils
     {
         /// <summary>
         /// Retrieve content from the web.
@@ -21,8 +21,8 @@ namespace GnuPG_Buildkit_Package_Lister
             // Get the stream
             var stream = response.GetResponseStream();
             // Read the stream
-            StreamReader reader = new StreamReader(stream);
-            string data = await reader.ReadToEndAsync();
+            var reader = new StreamReader(stream);
+            var data = await reader.ReadToEndAsync();
             return data;
         }
     }

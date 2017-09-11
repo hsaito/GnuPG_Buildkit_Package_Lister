@@ -9,7 +9,7 @@ namespace GnuPG_Buildkit_Package_Lister_Test
         [TestMethod]
         public void FetchWeb()
         {
-            GnuPG_Buildkit_Package_Lister_Utils.GetWeb("http://example.com").Wait();
+            GnuPgBuildkitPackageListerUtils.GetWeb("http://example.com").Wait();
         }
     }
 }

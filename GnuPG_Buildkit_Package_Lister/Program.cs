@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Net;
 using System.IO;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using System.Text;
 using log4net;
 using System.Xml;
-using log4net.Repository;
 using System.Reflection;
 using log4net.Config;
 
@@ -16,30 +9,30 @@ namespace GnuPG_Buildkit_Package_Lister
 {
     public class Program
     {
-        private static readonly ILog log = LogManager.GetLogger(typeof(Program));
+        private static readonly ILog Log = LogManager.GetLogger(typeof(Program));
 
         /// <summary>
         /// Main Function
         /// </summary>
-        static int Main(string[] args)
+        private static int Main()
         {
 
             try
             {
                 // Configuration for logging
-                XmlDocument log4netConfig = new XmlDocument();
+                var log4NetConfig = new XmlDocument();
 
-                using (StreamReader reader = new StreamReader(new FileStream("log4net.config", FileMode.Open, FileAccess.Read)))
+                using (var reader = new StreamReader(new FileStream("log4net.config", FileMode.Open, FileAccess.Read)))
                 {
-                    log4netConfig.Load(reader);
+                    log4NetConfig.Load(reader);
                 }
 
-                ILoggerRepository rep = log4net.LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
-                XmlConfigurator.Configure(rep, log4netConfig["log4net"]);
+                var rep = LogManager.CreateRepository(Assembly.GetEntryAssembly(), typeof(log4net.Repository.Hierarchy.Hierarchy));
+                XmlConfigurator.Configure(rep, log4NetConfig["log4net"]);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(Resources.messages.logging_error);
+                Console.WriteLine(Resources.Messages.LoggingError);
                 Console.WriteLine(ex.Message);
                 return -1;
             }
@@ -47,20 +40,19 @@ namespace GnuPG_Buildkit_Package_Lister
             try
             {
                 // Start the program
-                log.Info(Resources.messages.program_starting);
+                Log.Info(Resources.Messages.ProgramStarting);
 #if DEBUG
-                log.Info(Resources.messages.debug_mode);
+                Log.Info(Resources.Messages.DebugMode);
 #endif
-                GnuPG_Processor processor = new GnuPG_Processor();
-                var retval = processor.Process().Result;
+                var retval = GnuPrivacyGuardProcessor.Process().Result;
                 //Process().Wait();
-                log.Info(Resources.messages.program_completed);
+                Log.Info(Resources.Messages.ProgramCompleted);
                 return retval;
             }
             catch (Exception ex)
             {
-                log.Fatal(ex.Message);
-                log.Debug(ex.StackTrace);
+                Log.Fatal(ex.Message);
+                Log.Debug(ex.StackTrace);
                 return -1;
             }
         }
