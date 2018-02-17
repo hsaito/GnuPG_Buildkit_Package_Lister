@@ -1,0 +1,7 @@
+language: csharp
+solution: GnuPG_Buildkit_Package_Lister.sln
+mono: none
+dotnet: 2.1.4
+script:
+ - dotnet restore
+ - dotnet build
